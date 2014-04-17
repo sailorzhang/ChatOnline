@@ -1,5 +1,7 @@
 ## Getting Started
 
+## Getting Started
+
 This box is a fully functional Linux environment in which you can
 develop any Linux-based application. This box comes bundled with gcc,
 make, perl and other system-level libraries, enough to get you started
