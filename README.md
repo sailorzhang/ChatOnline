@@ -1,5 +1,3 @@
-h1. Hello!
-
 ## Getting Started
 
 ## Getting Started
