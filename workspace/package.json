@@ -1,0 +1,11 @@
+{
+  "Name":"ChatOnline",
+  "version":"0.0.1",
+  "private":true,
+  "main":"app.js",
+  "dependencies":{
+    "express":"latest",
+    "socket.io":"latest",
+    "underscore":"latest"
+  }
+}
