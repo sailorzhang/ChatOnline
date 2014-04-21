@@ -2,5 +2,12 @@
 <html>
   <head>
   <title>A</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
+      socket.on('news', function (data) {
+        console.log(data);
+      });
+    </script>
   </head>
 </html>
