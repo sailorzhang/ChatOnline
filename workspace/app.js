@@ -10,7 +10,7 @@ var http = require("http"),
   app.set('port',process.env.PORT || 8080);
   app.set('views',__dirname+'/views');
   app.set('view engine','html');
-connect().use(require('static-favicon'));
+  connect().use(require('static-favicon'));
   //app.use(express.favicon());
   //app.use(express.logger('dev'));
   //app.use(express.bodyParser());
@@ -40,9 +40,8 @@ server.listen(app.get('port'),function(){
   console.log("Express server listening on port " + app.get('port'));
 });
 
-io.sockets.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
-});
+require('./socket/index.socket').beginSocket(io);
+
 
 
 
