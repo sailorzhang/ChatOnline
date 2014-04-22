@@ -1,13 +1,125 @@
 <!DOCTYPE html>
 <html>
-  <head>
-  <title>A</title>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
-      socket.on('news', function (data) {
-        console.log(data);
-      });
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatOnline</title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet">
+    <style type="text/css">
+        body
+        {
+            height: 100%;
+        }
+        .container
+        {
+            height: 100%;
+        }
+        .row
+        {
+            height: 100%;
+        }
+        .row div
+        {
+            height: 100%;
+        }
+    </style>
+    <script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
+            socket.on('connection', function () {
+                var username = $.data(document.body, "username");
+                if (!username)
+                    username = window.prompt("输入用户名");
+                if (!username)
+                    return;
+                $.data(document.body, "username", username);
+                socket.emit('IN', { 'username': username });
+            });
+
+            socket.on('RefreshUsers', function (data) {
+                console.log(data.UserList);
+            })
+
+        });
     </script>
-  </head>
+</head>
+<body>
+    <div style="height: 20px;">
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2">
+                <div style="background-color: Red;">
+                    <ul>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                        <li>Sailor</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-xs-10">
+                <div style="background-color: Blue; overflow-y: scroll; overflow-x: hidden;">
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                    <div>
+                        A</div>
+                </div>
+                <div style="padding-top: 20px;">
+                    <textarea placeholder="type your content"></textarea>
+                    <input class="btn btn-primary active btn-lg" type="button" value="Input" />
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
 </html>
