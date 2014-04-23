@@ -20,5 +20,11 @@ exports.beginSocket = function (io) {
                 io.sockets.emit("RefreshUsers", { UserList: users });
             });
         });
+
+        socket.on('NewChat', function (data) {
+            var user = data.username;
+            var content = data.content;
+            io.sockets.emit("NewChat", { username: user, content: content });
+        })
     });
 }

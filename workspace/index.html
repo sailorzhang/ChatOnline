@@ -21,12 +21,17 @@
         {
             height: 100%;
         }
+        .highlight
+        {
+            color: Blue;
+        }
     </style>
     <script src="http://cdn.bootcss.com/jquery/2.1.0/jquery.min.js"></script>
+    <script src="http://cdn.bootcss.com/underscore.js/1.6.0/underscore-min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
         $(function () {
-            var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
+            var socket = io.connect('http://localhost:8080/');
             socket.on('connection', function () {
                 var username = $.data(document.body, "username");
                 if (!username)
@@ -38,10 +43,41 @@
             });
 
             socket.on('RefreshUsers', function (data) {
-                console.log(data.UserList);
+                $("#userlist").empty();
+                _.each(data.UserList, function (user) {
+                    console.log(user);
+                    var li = $('<li>').text(user);
+                    if (user == getUserName()) {
+                        li.addClass("highlight");
+                    }
+                    $("#userlist").append(li);
+                });
             })
 
+            $('#btnSend').on('click', function () {
+                var chat = $('#chat').val();
+                socket.emit('NewChat', { username: getUserName(), content: chat });
+                $('#chat').val('');
+            });
+
+            socket.on('NewChat', function (data) {
+                var p = $('<p class="text-overflow">').text(data.username + ":" + data.content);
+                if (data.username == getUserName()) {
+                    p.addClass("highlight");
+                }
+                $('#content').append(p);
+            });
+
+            $(document).on('keyup', function (event) {
+                if (event.keyCode === 13) {
+                    $('#btnSend').click();
+                }
+            });
         });
+
+        function getUserName() {
+            return $.data(document.body, "username");
+        }
     </script>
 </head>
 <body>
@@ -50,73 +86,18 @@
     <div class="container">
         <div class="row">
             <div class="col-xs-2">
-                <div style="background-color: Red;">
-                    <ul>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
-                        <li>Sailor</li>
+                <div>
+                    <ul id='userlist'>
                     </ul>
                 </div>
             </div>
             <div class="col-xs-10">
-                <div style="background-color: Blue; overflow-y: scroll; overflow-x: hidden;">
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
-                    <div>
-                        A</div>
+                <div style="overflow-y: scroll; overflow-x: hidden; height: 600px;" id="content">
+                    
                 </div>
                 <div style="padding-top: 20px;">
-                    <textarea placeholder="type your content"></textarea>
-                    <input class="btn btn-primary active btn-lg" type="button" value="Input" />
+                    <textarea placeholder="type your content" id='chat'></textarea>
+                    <input class="btn btn-primary active btn-lg" type="button" value="Input" id='btnSend' />
                 </div>
             </div>
         </div>
