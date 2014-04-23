@@ -30,51 +30,51 @@
     <script src="http://cdn.bootcss.com/underscore.js/1.6.0/underscore-min.js"></script>
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     <script type="text/javascript">
-        $(function () {
-            var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
-            socket.on('connection', function () {
-                var username = $.data(document.body, "username");
-                if (!username)
-                    username = window.prompt("输入用户名");
-                if (!username)
-                    return;
-                $.data(document.body, "username", username);
-                socket.emit('IN', { 'username': username });
-            });
 
-            socket.on('RefreshUsers', function (data) {
-                $("#userlist").empty();
-                _.each(data.UserList, function (user) {
-                    console.log(user);
-                    var li = $('<li>').text(user);
-                    if (user == getUserName()) {
-                        li.addClass("highlight");
-                    }
-                    $("#userlist").append(li);
+        var username = window.prompt("输入用户名");
+        if (username) {
+            $(function () {
+                var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
+                socket.on('connection', function () {
+                    $.data(document.body, "username", username);
+                    socket.emit('IN', { 'username': username });
                 });
-            })
 
-            $('#btnSend').on('click', function () {
-                var chat = $('#chat').val();
-                socket.emit('NewChat', { username: getUserName(), content: chat });
-                $('#chat').val('');
-            });
+                socket.on('RefreshUsers', function (data) {
+                    $("#userlist").empty();
+                    _.each(data.UserList, function (user) {
+                        console.log(user);
+                        var li = $('<li>').text(user);
+                        if (user == getUserName()) {
+                            li.addClass("highlight");
+                        }
+                        $("#userlist").append(li);
+                    });
+                })
 
-            socket.on('NewChat', function (data) {
-                var p = $('<p class="text-overflow">').text(data.username + ":" + data.content);
-                if (data.username == getUserName()) {
-                    p.addClass("highlight");
-                }
-                $('#content').append(p);
-                $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
-            });
+                $('#btnSend').on('click', function () {
+                    var chat = $('#chat').val();
+                    socket.emit('NewChat', { username: getUserName(), content: chat });
+                    $('#chat').val('');
+                });
 
-            $(document).on('keyup', function (event) {
-                if (event.keyCode === 13) {
-                    $('#btnSend').click();
-                }
+                socket.on('NewChat', function (data) {
+                    var p = $('<p>').text(data.username + ":" + data.content);
+                    if (data.username == getUserName()) {
+                        p.addClass("highlight");
+                    }
+                    $('#content').append(p);
+                    $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
+                });
+
+                $(document).on('keyup', function (event) {
+                    if (event.keyCode === 13) {
+                        $('#btnSend').click();
+                    }
+                });
             });
-        });
+        }
+
 
         function getUserName() {
             return $.data(document.body, "username");
@@ -94,7 +94,6 @@
             </div>
             <div class="col-xs-10">
                 <div style="overflow-y: scroll; overflow-x: hidden; height: 600px;" id="content">
-                    
                 </div>
                 <div style="padding-top: 20px;">
                     <textarea placeholder="type your content" id='chat'></textarea>
