@@ -66,6 +66,7 @@
                     p.addClass("highlight");
                 }
                 $('#content').append(p);
+                $('#content')[0].scrollTop = $('#content')[0].scrollHeight;
             });
 
             $(document).on('keyup', function (event) {
