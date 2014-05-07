@@ -8,6 +8,7 @@
     "socket.io":"latest",
     "underscore":"latest",
     "connect":"latest",
-    "static-favicon":"latest"
+    "static-favicon":"latest",
+    "koa":"latest"
   }
 }
