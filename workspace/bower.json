@@ -1,0 +1,25 @@
+{
+  "name": "ChatOnline",
+  "version": "0.0.1",
+  "homepage": "https://github.com/SailorZhang/ChatOnline",
+  "authors": [
+    "SailorZhang <z@zhangxiangnan.cn>"
+  ],
+  "description": "ChatOnline Bower",
+  "main": "app.js",
+  "keywords": [
+    "ChatOnline"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies":{
+    "jquery":"latest"
+  }
+}
