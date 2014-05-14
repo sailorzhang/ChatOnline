@@ -9,6 +9,7 @@
     "underscore":"latest",
     "connect":"latest",
     "static-favicon":"latest",
-    "koa":"latest"
+    "koa":"latest",
+    "bower":"latest"
   }
 }
