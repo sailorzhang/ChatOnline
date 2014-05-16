@@ -35,6 +35,11 @@
         var username = window.prompt("输入用户名");
         if (username) {
             $(function () {
+              if(window.webkitNotifications && window.webkitNotifications.checkPermission() != 0){
+                $('#btnNotifications').on('click',r);
+              }else{
+                $('#btnNotifications').remove();
+              }
                 var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
                 socket.on('connection', function () {
                     $.data(document.body, "username", username);
@@ -63,6 +68,10 @@
                     var p = $('<h5>').text(data.username + ":" + data.content);
                     if (data.username == getUserName()) {
                         p.addClass("text-primary");
+                    }else{
+                      var _notify = webkitNotifications.createNotification('',data.username,data.content);
+                      _notify.show();
+                      setTimeout(function(){_notify.cancel();}, 2000);
                     }
 
                   p.append($('<small>').text(moment().format('HH:mm:ss')));
@@ -82,9 +91,19 @@
         function getUserName() {
             return $.data(document.body, "username");
         }
+      
+      function r(){
+        if(window.webkitNotifications){
+                  if(window.webkitNotifications.checkPermission()!=0){
+                    window.webkitNotifications.requestPermission(r);
+                    $(this).remove();
+                  }
+                }
+      }
     </script>
 </head>
 <body>
+  
     <div style="height: 20px;">
     </div>
     <div class="container">
@@ -101,6 +120,8 @@
                 <div style="padding-top: 20px;">
                     <textarea placeholder="type your content" id='chat'></textarea>
                     <input class="btn btn-primary active btn-lg" type="button" value="Input" id='btnSend' />
+                  
+                  <input class="btn btn-primary active btn-lg" type="button" value="Notifications" id='btnNotifications' />
                 </div>
             </div>
         </div>
