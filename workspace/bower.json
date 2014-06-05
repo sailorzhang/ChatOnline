@@ -20,6 +20,9 @@
     "tests"
   ],
   "dependencies":{
-    "jquery":"latest"
+    "jquery":"latest",
+    "moment":"latest",
+    "bootstrap":"latest",
+    "underscore":"latest"
   }
 }

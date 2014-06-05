@@ -5,10 +5,11 @@
   "main":"app.js",
   "dependencies":{
     "express":"latest",
-    "socket.io":"latest",
+    "socket.io":"0.x",
     "underscore":"latest",
     "connect":"latest",
     "static-favicon":"latest",
+    "serve-static":"latest",
     "koa":"latest",
     "bower":"latest"
   }
