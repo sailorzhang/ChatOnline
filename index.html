@@ -40,7 +40,7 @@
               }else{
                 $('#btnNotifications').remove();
               }
-                var socket = io.connect('http://chatonline-104902.apne1.nitrousbox.com:8080/');
+                var socket = io.connect('http://chatonline-119846.apne1.nitrousbox.com:8080/');
                 socket.on('connection', function () {
                     $.data(document.body, "username", username);
                     socket.emit('IN', { 'username': username });
